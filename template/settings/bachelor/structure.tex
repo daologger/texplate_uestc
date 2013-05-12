@@ -1,0 +1,52 @@
+\AtBeginDocument{ % 插入到论文内容的最前面。
+    \begin{CJK}{UTF8}{rm} % 中文支持环境,此处内容不受ctexbook文类影响,所以必须手动加这个环境
+%    \input{contents/titlepage} % 导入封面信息
+%    \maketitle % 生成并插入封面
+    \Cabstractmatter % 设置中文摘要版式
+    \include{contents/abstractCN} % 插入中文摘要
+    \Eabstractmatter % 设置英文摘要版式
+    \include{contents/abstractEN} % 插入英文摘要
+    \tocmatter % 目录版式
+    \setcounter{tocdepth}{2} % 设置目录深度
+    \tableofcontents % 插入目录
+    \ifblank{\ifusingglossary}{}{ % 若文中使用\fuhao命令,则插入主要符号表
+        \glossarymatterfancy % 设置主要符号表版式
+        \printglossary % 插入主要符号表
+        \mainmatter % 修正主要符号表版式,这里是受目录版式的影响,必须在此加入\mainmatter
+    }
+    \end{CJK}
+    \mainmatter % 正文区版式
+}
+
+\AtEndDocument{ % 插入到论文内容最后面。
+    \begin{CJK}{UTF8}{rm}
+    \phantomsection % 手动添加目录项之前需要这个命令，用以更新目录超链接的跳转页码。
+    \chapter*{致\enspace 谢} % 用带星号的章命令插入不带章号的致谢
+    \addcontentsline{toc}{chapter}{致\enspace 谢} % 将致谢编入目录
+    \markboth{致\enspace 谢}{} % 页眉设置 
+    \input{contents/acknowledgements} % 插入致谢内容
+    \clearpage
+    \phantomsection % 手动添加目录项之前需要这个命令，用以更新目录超链接的跳转页码。
+    \addcontentsline{toc}{chapter}{参考文献} % 将参考文献编入目录
+    {\zihao{5}{
+        \printbibliography[
+            title={参考文献}
+        ] % 插入参考文献
+    }}
+    \appendix % 附录版式
+    \renewcommand{\chaptermark}[1]{
+        \markboth{附录~\Alph{chapter}~\quad  #1 }{}
+    } % 附录页眉设置
+    \input{contents/appendix} % 插入附录内容
+    \IfFileExists{contents/original.tex}{
+        \clearpage
+        \renewcommand{\chaptermark}[1]{\markboth{外文资料原文}{}}
+        \def\leftmark{外文资料原文}
+        \include{contents/original}
+        \renewcommand{\chaptermark}[1]{\markboth{外文资料译文}{}}
+        \def\leftmark{外文资料译文}
+        \include{contents/translation}
+    }{}
+    \clearpage
+    \end{CJK}
+}

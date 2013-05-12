@@ -1,0 +1,354 @@
+%% 摘要格式设置
+\newenvironment{abstractCN}[5]{ % 定义中文摘要环境 
+    \newcommand{\@ckeywords}{
+        \ifthenelse{\equal{#1}{}}{必选关键词}{#1，}
+        \ifthenelse{\equal{#2}{}}{必选关键词}{#2，}
+        \ifthenelse{\equal{#3}{}}{必选关键词}{#3，}
+        \ifthenelse{\equal{#4}{}}{}{#4，}
+        \ifthenelse{\equal{#5}{}}{}{#5}
+    } % 定义生成中文关键词的命令:如果关键词少于3个则用"必选关键词"五个字补上,以提示作者关键词不够;同时自动加入正确的中文逗号
+    \chapter*{摘\enspace 要} % 插入不带章号的摘要
+}
+{\begin{description}[topsep=6mm,font=\textbf,style=sameline,leftmargin=4em,labelindent=0pt,labelsep=0em,itemindent=0em]
+	\item[关键词：] \@ckeywords
+\end{description}
+}   
+\newenvironment{abstractEN}[5]{ % 定义英文摘要环境
+    \newcommand{\@ekeywords}{
+        \ifthenelse{\equal{#1}{}}{必选关键词}{#1,}
+        \ifthenelse{\equal{#2}{}}{必选关键词}{#2,}
+        \ifthenelse{\equal{#3}{}}{必选关键词}{#3,}
+        \ifthenelse{\equal{#4}{}}{}{#4,}
+        \ifthenelse{\equal{#5}{}}{}{#5}
+    } % 定义生成英文关键词的命令:如果关键词少于3个则用"必选关键词"五个字补上,以提示作者关键词不够;同时自动加入正确的英文逗号
+    \chapter*{\bf{ABSTRACT}} % 插入不带章号的ABSTRACT
+}
+{\begin{description}[topsep=6mm,font=\textbf,style=sameline,leftmargin=5em,labelindent=0pt,labelsep=0em,itemindent=0em]
+	\item[Keywords: ] \@ekeywords
+\end{description}
+}  
+
+%% 各级标题设置
+\setcounter{secnumdepth}{3} % 设置标题排序深度到3级节标题subsubsection, 即1.1.1.1
+\CTEXsetup[ % 设置章标题格式
+    name={第,章},
+    number={\chinese{chapter}},
+    nameformat={},
+    numberformat={},
+    titleformat={},
+    aftername={\,\,\,},
+    beforeskip={1mm minus 0.5mm}, % 章标题段前30磅
+    afterskip={30pt plus 0pt minus 9pt}, % 章标题段后30磅
+    format={\heiti\zihao{-3}\centering}
+]{chapter}
+\CTEXsetup[ % 设置1级节标题格式
+    aftername={\,\,\,},
+    beforeskip={18pt plus 0pt minus 5.4pt},
+    afterskip={18pt plus 0pt minus 5.4pt},
+    format={\heiti\zihao{4}\flushleft}
+]{section}
+\CTEXsetup[ % 设置2级节标题格式 
+    aftername={\,\,\,},
+    beforeskip={12pt plus 0pt minus 3.6pt},
+    afterskip={12pt plus 0pt minus 3.6pt},
+    format={\heiti\zihao{4}\flushleft}
+]{subsection}
+\CTEXsetup[ % 设置3级节标题格式
+    aftername={\,\,\,},
+    beforeskip={-2ex plus -1ex minus -.2ex},
+    afterskip={1.5ex plus .2ex},
+    format={\heiti\zihao{-4}\flushleft}
+]{subsubsection}
+% 弹性长度的距离为行距的20%; 排版规则中说明可以适当调整各级标题段后间距
+
+%% 设置术语表宏包供主要符号表使用
+\makeglossary % 术语表宏包, 用于生成主要符号表
+\renewcommand{\glossaryname}{主要符号表}
+\renewcommand{\entryname}{符号或术语}
+\renewcommand{\descriptionname}{说明}
+\renewcommand{\glspageheader}{页码}
+\newcommand{\ifusingglossary}{} % 设置一个变量用以判断是否使用主要符号表
+\newcommand{\fuhao}[3]{ % 包装向主要符号表中插入条目的命令
+    \glossary{name={#1},description={#2},sort=#3}
+    \renewcommand{\ifusingglossary}{true} % 设置使用主要符号表
+}
+
+%% 页眉页脚设置
+\newcommand{\mainmatterfancy}{ % 定义正文版式设置
+    \fancyhf{}
+    \fancyhead[OC]{\CTEXnospace\CJKfamily{song}\zihao{5}\leftmark\CTEXspace} % 奇数页居中打印章标题
+    \fancyhead[EC]{\CJKfamily{song}\zihao{5}\thesisname@degree} % 偶数页居中打印论文全名
+    \fancyfoot[C]{\thepage} % 页码位于页面底端, 居中打印
+}
+\newcommand{\Cabstractfancy}{ % 定义中文摘要版式设置
+    \fancyhf{}
+    \fancyhead[C]{\zihao{5}摘要} % 页眉居中打印“摘要”
+    \fancyfoot[C]{\thepage} % 页码位于页面底端, 居中打印
+}
+\newcommand{\Eabstractfancy}{ % 定义英文摘要版式设置
+    \fancyhf{}
+    \fancyhead[C]{\zihao{5}ABSTRACT} % 页眉居中打印“ABSTRACT”
+    \fancyfoot[C]{\thepage} % 页码位于页面底端, 居中打印
+}
+\newcommand{\tocmatterfancy}{ % 定义目录区版式设置
+    \fancyhf{}
+    \fancyhead[C]{\zihao{5}目录} % 页眉居中打印“目　录”
+    \fancyfoot[C]{\thepage} % 页码位于页面底端, 居中打印
+}
+\newcommand{\glossarymatterfancy}{ % 定义主要符号表版式设置
+    \fancypagestyle{plain}{
+        \fancyhf{}
+        \fancyhead[C]{\zihao{5}主要符号表}
+        \fancyfoot[C]{\thepage}
+    }
+    \renewcommand{\glossarypreamble}{
+        \fancyhead[C]{\zihao{5}主要符号表} % 页眉居中打印“主要符号表”
+    }
+}
+\newcommand{\Cabstractmatter}{ % 设置中文摘要版式
+    \setcounter{page}{1} % 页码重置为1
+    \pagenumbering{Roman} % 页码使用大写罗马数字
+    \pagestyle{fancy}
+    \Cabstractfancy
+    \fancypagestyle{plain}{\Cabstractfancy} % 中文摘要页版式, 该定义会在英文摘要版式设置中被覆盖
+}
+\newcommand{\Eabstractmatter}{ % 设置英文摘要版式
+    \pagestyle{fancy}
+    \Eabstractfancy
+    \fancypagestyle{plain}{\Eabstractfancy} % 英文摘要页版式, 该定义会在目录版式设置中被覆盖
+}
+\newcommand{\tocmatter}{ % 定义目录版式
+    \pagestyle{fancy}
+    \tocmatterfancy % 使章标题页页眉页脚与其他页一致
+    \fancypagestyle{plain}{\tocmatterfancy} % 目录页版式, 目录的右页和摘要或正文的其他章标题页不同, 该定义会在正文区命令中被覆盖
+}
+\renewcommand{\mainmatter}{ % 重定义正文区版式
+    \newpage
+    \setcounter{page}{1}
+    \pagenumbering{arabic}
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{\markboth{第\chinese{chapter}章~ ##1}{}} % 修正页眉章号显示
+    \mainmatterfancy % 设置正文的版式
+    \fancypagestyle{plain}{\mainmatterfancy} % 章标题页使用plain版式, 使其页眉页脚与其他页一致
+}
+
+%% 为方便使用图、表、代码环境，设定自定义命令
+\newcommand{\pic}[5][htbp]{% \pic命令生成一个独占一行, 居中的图片, 标题前后间距符合科大毕设标准
+	{\vskip 4pt}
+    \begin{figure}[#1]
+        \centering
+        \includegraphics[width=#3]{#4}
+        \caption{#2}
+        #5 % label
+    \end{figure}
+    {\vskip 6pt}
+}
+% 定义子图环境和插入子图命令
+\def\stack{}
+\def\stackcount{0}
+\def\tmpvar{}
+\newlength{\leftcap}
+\newcounter{incaps}
+\def\incap#1{
+	\let\xdo\relax
+	\count0=\stackcount\relax
+	\advance\count0 by 1
+	\xdef\stackcount{\the\count0}%
+	\toks0{\xdo{#1}}%
+	\toks2\expandafter{\stack}%
+	\xdef\stack{\the\toks2 \the\toks0 }
+}
+\def\outcap{%
+	\count0=\value{incaps}
+	\def\xdo##1{
+		\stepcounter{incaps}
+		\setlength{\leftcap}{\widthof{图2-2}+\widthof{(\alph{incaps}) ##1}-\widthof{\tmpvar}}
+		\advance\count0 by 1 {\hskip\leftcap (\alph{incaps}) ##1\\}
+	}%
+	\stack
+}
+\newcommand{\subpic}[4]{ % 定义插入子图命令
+    \subfigure[]{%
+        \includegraphics[width=#2]{#3}%
+        #4 % label
+        \incap{#1}
+    }
+}
+\newcommand{\picslabel}{} % 定义一个空的多图环境整体的标签变量
+\newcommand{\picscaption}{} % 定义一个空的多图环境整体的标题变量
+\newenvironment{pics}[3][htbp]{ % 定义多图环境
+    \renewcommand{\picslabel}{#3} % 设置多图环境整体的标签
+    \renewcommand{\picscaption}{#2} % 设置多图环境整体的标题:这里先定义两个空变量,又设置值,是因为在定义一个环境时,环境结尾中不能调用#2,#3等传入的值;所以要在环境结尾中插入标题和标签就只能这么做了
+    \def\stack{}
+    \def\tmpvar{#2}
+    \begin{figure}[#1]
+    	\centering
+}{
+    	\caption{\picscaption}
+    	{\vskip 14pt}%
+    	{\zihao{5} \outcap}%
+    	\picslabel %
+    	\setcounter{incaps}{0} %
+    \end{figure}
+}
+\newenvironment{mpics}[1][htbp]{
+    \begin{figure}[#1]
+}{
+    \end{figure}
+}
+\newcommand{\minipic}[4]{
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=#2]{#3}
+        \caption{#1}
+        #4 % label
+    \end{minipage}
+}
+\newcommand{\utable}[8][htbp]{ % \threelinetable命令生成一个独占一行,居中的三线表格
+    \begin{table}[#1]
+        \centering
+        \begin{threeparttable}
+            \caption{#4}
+            \ifblank{#8}{}{#8} % label
+            \begin{tabularx}{#2}{#3}
+                \toprule[0.08em]
+                #5
+                \midrule[0.05em]
+                #6
+                \bottomrule[0.08em]
+            \end{tabularx}
+            \ifblank{#7}{}{
+                \tnote{#7}
+            }
+        \end{threeparttable}
+    \end{table}
+}
+\newcommand{\longutable}[6][lcr]{ % 生成一个居中的、可自动换页的三线表格
+    \begin{longtable}{#1}
+        \caption{#2}#6\\
+        \toprule[0.08em]
+        #4
+        \midrule[0.05em]
+        \endfirsthead
+        \multicolumn{#3}{c}{{ \zihao{5}{\tablename\ \thetable{}} \footnotesize{接上页}}}\\
+        \toprule[0.08em]
+        #4
+        \midrule[0.05em]
+        \endhead
+        \bottomrule[0.08em]
+        \multicolumn{#3}{r}{{\footnotesize{接下页}}}\\
+        \endfoot
+        \bottomrule[0.08em]
+        \endlastfoot
+        #5
+   \end{longtable}
+}
+\newcommand{\pictable}[5][htbp]{ % 插入图片形式的表格
+    \begin{table}[#1]
+        \centering
+        \caption{#2}
+        #5 % label
+        \includegraphics[width=#3]{#4}
+    \end{table}
+}
+\newcommand{\codes}[2]{ % 插入代码块
+    \lstinputlisting[language=#1]{res/#2}
+}
+
+%% 图表设置
+\intextsep=8pt
+% 设置浮动体在文本中间的前后间距为6磅, 同时在caption宏包的belowskip选项中设置的-7mm+6bp
+\captionsetup{format=hang, labelsep=space} % 将标题从第二行起悬挂缩进排版, 缩进宽度等于标题标志加分隔符的宽度; 分隔符样式为一个空格
+\captionsetup[figure]{ % 设置图表题与正文的距离
+    aboveskip=4pt,
+    belowskip=-20pt+6pt
+} %
+\setlength{\subfigcapskip}{-6pt}
+\setlength{\subfigbottomskip}{2pt}
+\captionsetup[table]{ % 设置表的标题与正文的距离
+    aboveskip=8pt,
+    belowskip=0pt,
+    skip=2pt
+} %
+\DeclareCaptionFont{capfont}{\zihao{5}} % 声明图表标题字体
+\captionsetup{font=capfont} % 设置图表标题字体
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}} % 使图编号数字间加一个短横线:即设置成图1-1的样式
+\renewcommand{\thesubfigure}{\arabic{chapter}-\arabic{figure}\,(\alph{subfigure})} % 
+\renewcommand{\@thesubfigure}{(\alph{subfigure})} %
+\renewcommand{\p@subfigure}{} %
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}} % 使表编号数字间加一个短横线:即设置成表1-1的样式
+\graphicspath{{res/}} % 设置图片的根目录
+
+%% 目录设置
+\CTEXoptions[contentsname={\protect\songti\protect\zihao{-2}目\enspace 录}] % 设置目录标题
+\def\@dotsep{2} % 目录中连接页码的点的密度
+\def\l@chapter#1#2{\ifnum 0>\c@tocdepth \else \vskip2pt {\leftskip 0em\relax \rightskip \@tocrmarg \parfillskip -\rightskip \parindent 0em\relax \@afterindenttrue \interlinepenalty \@M \leavevmode \@tempdima 1em\relax \advance \leftskip \@tempdima \null \nobreak \hskip -\leftskip {\bfseries #1}\nobreak\leaders\hbox{$\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill \nobreak \hb@xt@ \@pnumwidth {\hfill #2}\vskip2pt }\fi} % 目录中的章标题改为黑体
+% 设置四级标题在目录中的左缩进分别为0,2,4,6个英文字符宽: 序号到题目间隔1个英文字符宽
+%\renewcommand*\l@section{\@dottedtocline{1}{1.7em}{1em}}
+%\renewcommand*\l@subsection{\@dottedtocline{2}{3.2em}{1em}}
+%\renewcommand*\l@subsubsection{\@dottedtocline{3}{4.5em}{1em}}
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{1em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{2.8em}{1em}}
+
+%% 代码环境设置
+\lstset{ % 设置代码块格式
+         numbers=left, % 行号位置
+         numberstyle=\scriptsize\color{lightgray}\sffamily, % 行号格式
+         numbersep=8pt, % 行号与代码间距
+         breaklines=true, % 长句子自动换行
+         xleftmargin=\parindent, % 左边距
+         xrightmargin=\parindent, % 右边距
+         basicstyle=\ttfamily\color{black}\small, % 代码块基本格式
+         tabsize=4, % TAB大小
+         columns=fullflexible, % 自动换行时的断词设置
+         keywordstyle=\color{blue!80}, % 关键词格式
+         stringstyle=\color{red}, % 字符串格式
+         showstringspaces=false, % 字符串中的空格显示设置
+         commentstyle=\color{red!50!green!75!blue!50}, % 注释样式
+         escapeinside={``}, % 代码中的中文字串和注释需要用`标注才能正常显示
+         extendedchars=false % 解决代码跨页时章节标题和页眉不显示的问题
+} 
+
+%% 数学公式设置
+\newcommand{\inmath}[1]{\,\(#1\)\,}
+\renewcommand{\theequation}{ % 使公式编号数字间加一个短横线, 如(1-1)
+    \arabic{chapter}-\arabic{equation}
+}
+\theorembodyfont{\normalfont} % 字体
+\theoremseparator{\,\,\,} % 分隔符是一个空格
+\theorempreskip{0pt} %
+\theorempostskip{0pt} %
+\newtheorem{dingyi}{\hskip2em定义} %
+\newtheorem{gongli}{\hskip2em公理} %
+\newtheorem{dingli}{\hskip2em定理} %
+\newtheorem{yinli}{\hskip2em引理} %
+\newtheorem{xingzhi}{\hskip2em性质} %
+\newtheorem{juli}{\hskip2em需求} %
+\theoremstyle{nonumberplain} %
+\newtheorem{zhengming}{\hskip2em证明} %
+
+%% 枚举环境设置
+\newenvironment{enum}{ %
+    \begin{enumerate}[leftmargin=*,labelindent=\parindent,topsep=4pt,label=(\arabic*)]
+}{
+    \end{enumerate}
+} %
+\newenvironment{uitem}{ %
+    \begin{itemize}[leftmargin=\parindent,topsep=4pt]
+}{
+    \end{itemize}
+}
+\newenvironment{desc}{ %
+	\begin{description}[topsep=0pt,font=\kaishu\textmd,style=sameline,leftmargin=0pt,labelindent=\parindent,labelsep=1em,itemindent=0pt]
+}{
+    \end{description}
+}
+\setlist{noitemsep} %
+
+%% 参考文献及交叉引用设置
+\renewcommand{\cite}[1]{\textsuperscript{\parencite{#1}}} % 重定义引用格式:插入右上角角标形式的参考文献引用
+\newcommand{\citeauthors}[1]{\citeauthor{#1}\cite{#1}} % 引用参考文献的作者和角标
+\AtBeginBibliography{\def\UrlFont{\rm}} % 参考文献URL
+\addbibresource{bib/ref.bib} % 正文参考文献
+

@@ -1,0 +1,53 @@
+% !Mode:: "TeX:UTF-8"
+
+%封面设置，学校规定封面必须用文印中心提供的封面，所以这个封面设置不用太过纠结。这个封面只能作为非正式提交前的论文的临时封面。让论文看起来完整一点，毕竟没有封面太难看了。
+\newcommand{\stuid}[1]{%设置学号命令
+\newcommand{\@stuid}{#1}
+}
+\newcommand{\major}[1]{%设置专业命令
+\newcommand{\@major}{#1}
+}
+\newcommand{\school}[1]{%设置学院命令
+\newcommand{\@school}{#1}
+}
+\newcommand{\adviser}[3]{%设置指导教师信息命令
+\newcommand{\@advisername}{#1}%姓名
+\newcommand{\@advisertitle}{#2}%职称
+\newcommand{\@adviserinstitution}{#3}%工作单位
+}
+\newcommand{\university}[1]{%设置指导单位命令
+\newcommand{\@university}{#1}
+}
+\renewcommand{\date}[3]{%设置日期命令
+\renewcommand{\@date}{#1年#2月#3日}
+}
+\newcommand{\uestclogo}{%插入学校LOGO的命令
+\includegraphics[width=13cm]{typesetting/UESTC.png}
+}
+\renewcommand{\maketitle}{%定义封面的格式
+\begin{titlepage}
+\begin{center}
+\zihao{3}
+\uestclogo\\
+\vspace{1cm}
+\resizebox{!}{1cm}{\zihao{0} 学\hspace{0.75em}士\hspace{0.75em}学\hspace{0.75em}位\hspace{0.75em}论\hspace{0.75em}文}\\[3mm]
+{\bf BACHELOR DISSERTATION}\\[1cm]
+\renewcommand{\ULthickness}{0.8pt}
+\renewcommand{\CJKunderlinecolor}{\color{black}}
+\linespread{1.25}
+\noindent
+\parbox[t][14ex][t]{\linewidth}{\centering
+{\heiti\zihao{3} 论文题目}\zihao{3}{\uline{\@title}}
+}\\[3mm]
+\linespread{1.391}
+\renewcommand{\ULthickness}{0.4pt}
+{\zihao{3}学生姓名~}\makebox[20em][c]{\uline{\hfill\@author\hfill}}\\[5mm]
+{\zihao{3}学\qquad 号~}\makebox[20em][c]{\uline{\hfill\@stuid\hfill}}\\[5mm]
+{\zihao{3}专\qquad 业~}\makebox[20em][c]{\uline{\hfill\@major\hfill}}\\[5mm]
+{\zihao{3}学\qquad 院~}\makebox[20em][c]{\uline{\hfill\@school\hfill}}\\[5mm]
+{\zihao{3}指导教师~}\makebox[20em][c]{\uline{\hfill\@advisername\hfill}}\\[5mm]
+{\zihao{3}指导单位~}\makebox[20em][c]{\uline{\hfill\@university\hfill}}\\[5mm]
+{\zihao{3}\@date}
+\end{center}
+\end{titlepage}
+}

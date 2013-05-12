@@ -1,0 +1,69 @@
+\AtBeginDocument{ % 插入到论文内容的最前面。
+    \begin{CJK}{UTF8}{rm} % 中文支持环境,此处内容不受ctexbook文类影响,所以必须手动加这个环境
+    \input{contents/titlepage} % 导入封面信息
+    \maketitle % 生成并插入封面
+    \Cabstractmatter % 设置中文摘要版式
+    \include{contents/abstractCN} % 插入中文摘要
+    \Eabstractmatter % 设置英文摘要版式
+    \include{contents/abstractEN} % 插入英文摘要
+    \tocmatter % 目录版式
+    \setcounter{tocdepth}{3} % 设置目录深度
+    \tableofcontents % 插入目录
+    \clearpage
+    \ifblank{\ifusingglossary}{}{ % 若文中使用\fuhao命令,则插入主要符号表
+        \glossarymatterfancy % 设置主要符号表版式
+        \printglossary % 插入主要符号表
+        \mainmatter % 修正主要符号表版式,这里是受目录版式的影响,必须在此加入\mainmatter
+    }
+    \end{CJK}
+    \mainmatter % 正文区版式
+    %% 令图引用（如图X-X）中'X-X'与中文部分有一定间隙
+	\let\oldref\ref
+	\makeatletter
+	\newcommand\myref[1]{\,\oldref{#1}\,}
+	\newcommand\myeqref[1]{\!（\!\oldref{#1}\!）}
+	\makeatother
+	\renewcommand{\ref}[1]{\myref{#1}}
+	\renewcommand{\eqref}[1]{\myeqref{#1}}
+}
+
+\AtEndDocument{ % 插入到论文内容最后面。
+    \begin{CJK}{UTF8}{rm}
+    \backmatter
+    \chapter{致\enspace 谢} % 用带星号的章命令插入不带章号的致谢
+    \markboth{致谢}{} % 致谢页眉设置 
+    \input{contents/acknowledgements.tex} % 插入致谢内容
+    \newpage
+    \phantomsection % 手动添加目录项之前需要这个命令，用以更新目录超链接的跳转页码。
+    \addcontentsline{toc}{chapter}{参考文献} % 将参考文献编入目录
+    {\sloppy\zihao{5}{ % 
+        \printbibliography[ %
+            title={参考文献} %
+         ] % 插入参考文献
+    }} % 参考文献字号为小四
+	\IfFileExists{contents/appendix.tex}{ %
+		\chapter{附\enspace 录} %
+    	\markboth{附录}{} % 附录页眉设置 
+    	\input{contents/appendix} % 插入附录内容	
+	}{}
+    \IfFileExists{bib/pub.bib}{ % 如果有pub.bib，将显示这一章
+        \clearpage
+        \phantomsection % 手动添加目录项之前需要这个命令，用以更新目录超链接的跳转页码。
+        \addcontentsline{toc}{chapter}{\pubname@degree} % 将个人著作编入目录
+        \newrefsection[bib/pub.bib]
+        \nocite{*}
+        {\sloppy\zihao{5}{
+            \printbibliography[
+                title={\pubname@degree}
+            ] % 插入个人著作
+        }} % 参考文献字号为小四
+        \endrefsection
+    }{}
+    \IfFileExists{chapters/X-FRONT.tex}{%
+		\chapter{写在最后} %
+    	\markboth{}{} %
+    	\input{chapters/X-FRONT.tex} %
+    }{} % 
+    \clearpage %
+    \end{CJK}
+}

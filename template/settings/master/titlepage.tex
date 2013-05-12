@@ -1,0 +1,178 @@
+\RequirePackage{
+    ifthen,
+    texnames % texnames宏包提供了\LaTeX等TeX专有Logo打印命令。这个宏包可能只在编写说明文档时有用
+}
+
+\newcommand{\stuid}[1]{%设置学号命令
+\newcommand{\@stuid}{#1}
+}
+\newcommand{\major}[1]{%设置专业命令
+\newcommand{\@major}{#1}
+}
+\newcommand{\school}[1]{%设置学院命令
+\newcommand{\@school}{#1}
+}
+\newcommand{\adviser}[3]{%设置第一指导教师信息命令
+\newcommand{\@advisername}{#1}%姓名
+\newcommand{\@advisertitle}{#2}%职称
+\newcommand{\@adviserinstitution}{#3}%工作单位
+}
+\newcommand{\adviserB}[3]{%设置第二指导教师信息命令
+\newcommand{\@adviserBname}{#1}%姓名
+\newcommand{\@adviserBtitle}{#2}%职称
+\newcommand{\@adviserBinstitution}{#3}%工作单位
+}
+\newcommand{\adviserC}[3]{%设置第三指导教师信息命令
+\newcommand{\@adviserCname}{#1}%姓名
+\newcommand{\@adviserCtitle}{#2}%职称
+\newcommand{\@adviserCinstitution}{#3}%工作单位
+}
+\newcommand{\adviserD}[3]{%设置第四指导教师信息命令
+\newcommand{\@adviserDname}{#1}%姓名
+\newcommand{\@adviserDtitle}{#2}%职称
+\newcommand{\@adviserDinstitution}{#3}%工作单位
+}
+\newcommand{\university}[1]{%设置指导单位命令
+\newcommand{\@university}{#1}
+}
+\renewcommand{\date}[3]{%设置论文提交日期命令
+\renewcommand{\@date}{#1年#2月#3日}
+}
+\newcommand{\oraldefensedate}[3]{%设置论文答辩日期命令
+\newcommand{\@oraldefensedate}{#1年#2月#3日}
+}
+\newcommand{\awarddate}[3]{%设置学位授予日期命令
+\newcommand{\@awarddate}{#1年#2月#3日}
+}
+\newcommand{\classnumber}[1]{%设置分类号命令
+\newcommand{\@classnumber}{#1}
+}
+\newcommand{\securityclassification}[1]{%设置密级命令
+\newcommand{\@securityclassification}{#1}
+}
+\newcommand{\UDC}[1]{%设置UDC命令
+\newcommand{\@UDC}{#1}
+}
+\newcommand{\chairman}[1]{%设置答辩委员会主席命令
+\newcommand{\@chairman}{#1}
+}
+\newcommand{\appraiser}[1]{%设置评阅人命令
+\newcommand{\@appraiser}{#1}
+}
+\newcommand{\englishtitle}[1]{%设置论文英文名命令
+\newcommand{\@englishtitle}{#1}
+}
+\newcommand{\englishmajor}[1]{%设置专业英文名命令
+\newcommand{\@englishmajor}{#1}
+}
+\newcommand{\englishauthor}[1]{%设置作者英文名命令
+\newcommand{\@englishauthor}{#1}
+}
+\newcommand{\englishadvisor}[1]{%设置指导教师英文名命令
+\newcommand{\@englishadvisor}{#1}
+}
+\newcommand{\englishshcool}[1]{%设置学院英文名命令
+\newcommand{\@englishshcool}{#1}
+}
+
+\newcommand{\uestclogo}{%插入学校LOGO的命令
+\includegraphics[width=0.5\textwidth]{template/res/logo.png}
+}
+\renewcommand{\maketitle}{%定义封面的格式
+\begin{titlepage}
+\begin{center}
+{\zihao{2}电\enspace{}子\enspace{}科\enspace{}技\enspace{}大\enspace{}学}\\
+{\zihao{-4}UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA}\\
+~\\
+~\\
+{\zihao{0}硕士学位论文}\\[12bp]
+{\bf\zihao{3}MASTER THESIS}\\[1cm]
+\uestclogo\\[1cm]
+\renewcommand{\ULthickness}{0.8pt}
+\renewcommand{\CJKunderlinecolor}{\color{black}}
+\linespread{1.25}
+\noindent
+\parbox[t][10ex][t]{\linewidth}{\centering %
+	{\zihao{-2} 论文题目~~}{\zihao{3}\uline{\@title}}
+} %
+\linespread{1.391} %
+\renewcommand{\ULthickness}{0.4pt} %
+{\zihao{3}学科专业~}\makebox[20em][c]{\zihao{3}\uline{\hfill\hfill\@major\hfill\hfill\hfill}}\\[5mm]
+{\zihao{3}学\qquad 号~}\makebox[20em][c]{\zihao{3}\uline{\hfill\hfill\@stuid\hfill\hfill\hfill}}\\[5mm]
+{\zihao{3}作者姓名~}\makebox[20em][c]{\zihao{3}\uline{\hfill\hfill\@author\hfill\hfill\hfill}}\\[5mm]
+{\zihao{3}指导教师~}\makebox[20em][c]{\zihao{3}\uline{\hfill\hfill\@advisername\hfill\hfill\hfill}}\\[5mm]
+\end{center}
+\newpage
+\thispagestyle{empty}
+\noindent
+{\zihao{-4}分类号}\makebox[15em][l]{\zihao{-4}\uline{\hfill\@classnumber\hfill\hfill}}
+{\zihao{-4}密级}\makebox[15em][l]{\zihao{-4}\uline{\hfill\@securityclassification\hfill\hfill}}\\
+{\zihao{-4}UDC\,\textsuperscript{注~\textsubscript{1}}\!}\makebox[15em][l]{\zihao{-4}\uline{\hfill\@UDC\hfill\hfill}}\\[5mm]
+\begin{center}
+{\zihao{-0}学\quad{}位\quad{}论\quad{}文}\\
+{\zihao{3}~}\\
+\makebox[\linewidth][c]{\zihao{3}\uline{\hfill\@title\hfill}}\\
+{\zihao{-4}（题名和副题名）}\\
+{\zihao{5}~}\\
+{\zihao{5}~}\\
+\makebox[10em][c]{\zihao{3}\uline{\hfill\@author\hfill}}\\
+{\zihao{-4}（作者姓名）}\\
+{\zihao{-4}~}\\
+{\zihao{5}~}\\
+{\zihao{-4}指导教师}\makebox[29em][c]{\zihao{-4}\uline{\hfill\@advisername 、\@advisertitle 、\@adviserinstitution \hfill}}\\[5bp]
+{\zihao{-4}\qquad\qquad}\makebox[29em][c]{\zihao{-4}\uline{\hfill\ifthenelse{\isundefined{\@adviserBname}}{}{\@adviserBname 、\@adviserBtitle 、\@adviserBinstitution }\hfill}}\\[5bp]
+{\zihao{-4}\qquad\qquad}\makebox[29em][c]{\zihao{-4}\uline{\hfill\ifthenelse{\isundefined{\@adviserCname}}{}{\@adviserBname 、\@adviserCtitle 、\@adviserCinstitution }\hfill}}\\[5bp]
+{\zihao{-4}\qquad\qquad}\makebox[29em][c]{\zihao{-4}\uline{\hfill\ifthenelse{\isundefined{\@adviserDname}}{}{\@adviserBname 、\@adviserDtitle 、\@adviserDinstitution }\hfill}}\\[5bp]
+{\zihao{-4}\hskip2em（姓名、职称、单位名称）}\\[10bp]
+\end{center}
+{\zihao{-4}申请学位级别}\makebox[10em][l]{\zihao{-4}\uline{\hfill\@degree\hfill}}
+{\zihao{-4}学科专业}\makebox[15em][l]{\zihao{-4}\uline{\hfill\@major\hfill}}\\[13bp]
+{\zihao{-4}提交论文日期}\makebox[10em][l]{\zihao{-4}\uline{\hfill\@date\hfill\hfill}}
+{\zihao{-4}论文答辩日期}\makebox[13em][l]{\zihao{-4}\uline{\hfill\@oraldefensedate\hfill\hfill}}\\[13bp]
+{\zihao{-4}学位授予单位和日期}\makebox[26em][l]{\zihao{3}\uline{\hfill 电子科技大学\hfill\@awarddate\hfill}}\\[13bp]
+{\zihao{-4}答辩委员会主席}\makebox[16em][l]{\zihao{-4}\uline{\hfill\@chairman\hfill}}\\[13bp]
+{\zihao{-4}评阅人}\makebox[32em][l]{\zihao{-4}\uline{\hfill\@appraiser\hfill}}\\
+\vfill
+{\zihao{5}注~1：注明《国际十进分类法UDC》的类号。}
+\newpage
+\thispagestyle{empty}
+\begin{center}
+{\zihao{-4}~}\\
+{\zihao{-4}~}\\
+{\zihao{-4}~}\\
+{\bf\zihao{-2}\@englishtitle}\\
+%\vfill
+\vspace{8cm}
+{\zihao{-3}A Master Thesis Submitted to}\\[1ex]
+{\zihao{-3}University of Electronic Science and Technology of China}\\
+\vspace{4cm}
+\makebox[6em][r]{\zihao{4}Major:}\makebox[25em][l]{\zihao{4}\uline{\hfill\hfill\@englishmajor\hfill\hfill\hfill}}\\[5mm]
+\makebox[6em][r]{\zihao{4}Author:}\makebox[25em][l]{\zihao{4}\uline{\hfill\hfill\@englishauthor\hfill\hfill\hfill}}\\[5mm]
+\makebox[6em][r]{\zihao{4}Advisor:}\makebox[25em][l]{\zihao{4}\uline{\hfill\hfill\@englishadvisor\hfill\hfill\hfill}}\\[5mm]
+\makebox[6em][r]{\zihao{4}School:}\makebox[25em][l]{\zihao{4}\uline{\hfill\hfill\@englishshcool\hfill\hfill\hfill}}\\[5mm]
+\end{center}
+\newpage
+\thispagestyle{empty}
+\linespread{1.5}
+\begin{center}
+{\bf\zihao{-2}独创性声明}\par
+\end{center}
+{\zihao{4}\qquad 本人声明所呈交的学位论文是本人在导师指导下进行的研究工作及取得的研究成果。据我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果，也不包含为获得电子科技大学或其它教育机构的学位或证书而使用过的材料。与我一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明并表示谢意。\par
+~\vskip1.2em
+作者签名：\makebox[7em][l]{\uline{\hfill}}\hfill
+日期：\qquad{}年\qquad{}月\qquad{}日 \par
+~\vskip1.2em
+\begin{center}
+{\bf\zihao{-2}论文使用授权}\par
+\end{center}
+{\zihao{4}\qquad 本学位论文作者完全了解电子科技大学有关保留、使用学位论文的规定，有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅。本人授权电子科技大学可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。\par
+（保密的学位论文在解密后应遵守此规定） \par
+~\vskip1.2em
+}
+\qquad 作者签名：\makebox[7em][l]{\uline{\hfill}}\hfill
+导师签名：\makebox[7em][l]{\uline{\hfill}}\vskip1em
+\hfill 日期：\qquad{}年\qquad{}月\qquad{}日 \par
+}
+\linespread{1.391}
+\end{titlepage}
+}
